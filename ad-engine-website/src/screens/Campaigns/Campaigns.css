@@ -1,0 +1,32 @@
+.site-layout-content {
+  margin-top: 10px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+.separator {
+  height: 1px;
+  background-color: rgb(190, 190, 190, 0.4);
+  box-shadow: 2px 2px 5px rgb(196, 192, 192);
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.ant-table {
+  box-sizing: border-box;
+  margin: 10px;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+  font-size: 14px;
+  background: #fff;
+  border-radius: 2px;
+}
+main.ant-layout-content {
+  display: flex !important;
+  flex-direction: column !important;
+}
