@@ -5,7 +5,6 @@ import Home from './screens/Home/Home';
 import Login from './screens/Login/Login';
 import Campaigns from './screens/Campaigns/Campaigns';
 import CreateCampaign from './screens/CreateCampaign/CreateCampaign';
-import Edit from './screens/EditCampaign/Edit';
 
 function App() {
   return (
@@ -15,8 +14,6 @@ function App() {
         <Route path="/home" component={Home} />
         <Route path="/campaigns" component={Campaigns} />
         <Route path="/createCampaign" component={CreateCampaign} />
-        <Route path="/edit" component={Edit} />
-
       </Switch>
     </Router>
   );

@@ -1,17 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import HeaderComponent from '../../components/Header/Header';
 import NestedTable from '../../components/Table/Table';
 import { Layout, Breadcrumb } from 'antd';
 import './Campaigns.css';
 import FormButton from '../../components/FormButton/FormButton';
-
+import { Modal } from 'antd';
 const { Content } = Layout;
+import { DatePicker, Space } from 'antd';
+import { Select } from 'antd';
 
 const Campaigns = () => {
-
-
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
@@ -32,7 +31,7 @@ const Campaigns = () => {
               color: 'white',
               marginTop: 20,
               marginBottom: 5,
-              width:140,
+              width: 140,
               alignSelf: 'flex-end',
             }}
             onClick={() => (window.location.pathname = '/createCampaign')}

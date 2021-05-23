@@ -5,13 +5,14 @@ import { Layout, Breadcrumb } from 'antd';
 import './CreateCampaign.css';
 import FormButton from '../../components/FormButton/FormButton';
 import FormInput from '../../components/FormInput/FormInput';
-import { DatePicker, Space, Input } from 'antd';
+import { DatePicker } from 'antd';
 import { Select } from 'antd';
 import { useState, useEffect } from 'react';
-
+const dateFormat = 'YYYY/MM/DD';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { Content } = Layout;
+import moment from 'moment';
 
 const CreateCampaign = () => {
   const [value, setvalue] = useState('');
@@ -22,20 +23,30 @@ const CreateCampaign = () => {
   };
 
   const [campaignNameState, setCampaignNameState] = useState('');
+  const [campaignIdState, setCampaignIdState] = useState();
+  const [startTimeState, setStartTimeState] = useState(new Date());
+  const [endTimeState, setEndTimeState] = useState(new Date());
+  const [typeState, setTypeState] = useState();
+  const [applicationNameState, setApplicationNameState] = useState('');
+  const [durationState, setDurationState] = useState();
+  const [imageUrlState, setImageUrlState] = useState('');
+  const [redirectUrlState, setRedirectUrlState] = useState('');
+  const [companyIdState, setCompanyIdState] = useState();
   const createCampaign = () => {
     var data = {
       //construct animal data to post
-      campaignName: value,
-      id: 1232,
-      startTime: new Date(2018, 11, 24, 10, 33, 30, 0),
-      endTime: new Date(2018, 11, 24, 10, 33, 30, 0),
-      applicationName: 'kaz',
-      styleType: 'banner',
-      imgUrl: value,
-      redirectUrl: value,
-      duration: 3000,
-      companyId: value,
+      campaignName: campaignNameState,
+      id: 1,
+      startTime: moment(startTimeState, dateFormat).add(15, 'minutes'),
+      endTime: moment(endTimeState, dateFormat).add(15, 'minutes'),
+      applicationName: applicationNameState,
+      styleType: typeState,
+      imgUrl: imageUrlState,
+      redirectUrl: redirectUrlState,
+      duration: durationState,
+      companyId: companyIdState,
     };
+
     fetch('https://localhost:44359/Advertising', {
       //fetching data httppost
       method: 'POST',
@@ -79,8 +90,7 @@ const CreateCampaign = () => {
               <div className="mainContainer">
                 <div className="leftSide">
                   <FormInput
-                    // onChange={(e) => setCampaignNameState(e)}
-                    onChange={(e) => onChange(e)}
+                    onChange={(e) => setCampaignNameState(e.target.value)}
                     placeholder="Campaign Name"
                     style={{
                       width: 'auto',
@@ -91,20 +101,36 @@ const CreateCampaign = () => {
                       borderRadius: 5,
                     }}
                   />
-                  <RangePicker
+                  <DatePicker
+                    onChange={(e) => setStartTimeState(e)}
+                    format={dateFormat}
                     style={{
-                      width: 'auto',
-                      maxWidth: 420,
                       height: 50,
-                      margin: 1,
+                      width: '100%',
                       marginBottom: 20,
                       alignItems: 'center',
                       borderRadius: 5,
+                      boxShadow: '1px 1px 2px 2px rgba(154,154,154,0.1)',
                     }}
+                    // style={Styles.datePickerStyle}
+                  />
+                  <DatePicker
+                    onChange={(e) => setEndTimeState(e)}
+                    format={dateFormat}
+                    style={{
+                      height: 50,
+                      width: '100%',
+                      marginBottom: 20,
+                      alignItems: 'center',
+                      borderRadius: 5,
+                      boxShadow: '1px 1px 2px 2px rgba(154,154,154,0.1)',
+                    }}
+                    // style={Styles.datePickerStyle}
                   />
 
                   <Select
                     defaultValue="Application Name"
+                    onChange={(e) => setApplicationNameState(e)}
                     style={{
                       width: 'auto',
                       maxWidth: 420,
@@ -114,14 +140,16 @@ const CreateCampaign = () => {
                       color: '#BFBEC3',
                       borderRadius: 5,
                     }}
-                    onChange={handleChange}
+                    size="large"
                   >
-                    <Option value="kazanimcepte">Kazanım Cepte</Option>
-                    <Option value="sinifimcepte">Sınıfım Cepte</Option>
+                    <Option value="kazanimCepte">Kazanım Cepte</Option>
+                    <Option value="sinifimCepte">Sınıfım Cepte</Option>
+                    <Option value="cepteTest">Cepte Test</Option>
                   </Select>
 
                   <Select
                     defaultValue="Type"
+                    onChange={(e) => setTypeState(e)}
                     style={{
                       width: 'auto',
                       maxWidth: 420,
@@ -131,15 +159,16 @@ const CreateCampaign = () => {
                       color: '#BFBEC3',
                       borderRadius: 5,
                     }}
-                    onChange={handleChange}
                     size="large"
                   >
                     <Option value="banner">Banner</Option>
+                    <Option value="interstitial">Interstitial</Option>
                   </Select>
                 </div>
                 <div className="rightSide">
                   <FormInput
-                    placeholder="Advertising Company Name"
+                    onChange={(e) => setCompanyIdState(e.target.value)}
+                    placeholder="Advertising Company ID"
                     style={{
                       width: 'auto',
                       minWidth: 450,
@@ -151,7 +180,8 @@ const CreateCampaign = () => {
                     onChange={onChange}
                   />
                   <FormInput
-                    placeholder="Contact"
+                    onChange={(e) => setDurationState(e.target.value)}
+                    placeholder="Duration"
                     style={{
                       width: 'auto',
                       minWidth: 450,
@@ -160,10 +190,10 @@ const CreateCampaign = () => {
                       marginBottom: 20,
                       borderRadius: 5,
                     }}
-                    onChange={onChange}
                   />
                   <FormInput
-                    placeholder="Address"
+                    onChange={(e) => setImageUrlState(e.target.value)}
+                    placeholder="Image Url"
                     style={{
                       width: 'auto',
                       minWidth: 450,
@@ -172,10 +202,10 @@ const CreateCampaign = () => {
                       marginBottom: 20,
                       borderRadius: 5,
                     }}
-                    onChange={onChange}
                   />
                   <FormInput
-                    placeholder="Payment Status"
+                    onChange={(e) => setRedirectUrlState(e.target.value)}
+                    placeholder="Redirect Url"
                     style={{
                       width: 'auto',
                       minWidth: 450,
@@ -184,7 +214,6 @@ const CreateCampaign = () => {
                       marginBottom: 20,
                       borderRadius: 5,
                     }}
-                    onChange={onChange}
                   />
                 </div>
               </div>
@@ -197,7 +226,6 @@ const CreateCampaign = () => {
                   marginLeft: 350,
                   marginBottom: 30,
                 }}
-                onChange={onChange}
                 onClick={() => createCampaign()}
               >
                 Create
