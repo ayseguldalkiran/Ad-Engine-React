@@ -15,7 +15,8 @@
     "moment": "^2.29.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "recharts": "^2.0.9"
   },
   "devDependencies": {
     "@eduotech/config": "^0.1.1",

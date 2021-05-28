@@ -15,13 +15,6 @@ const { Content } = Layout;
 import moment from 'moment';
 
 const CreateCampaign = () => {
-  const [value, setvalue] = useState('');
-
-  const onChange = ({ target: { value } }) => {
-    setvalue(value);
-    console.log(value);
-  };
-
   const [campaignNameState, setCampaignNameState] = useState('');
   const [campaignIdState, setCampaignIdState] = useState();
   const [startTimeState, setStartTimeState] = useState(new Date());
@@ -34,9 +27,8 @@ const CreateCampaign = () => {
   const [companyIdState, setCompanyIdState] = useState();
   const createCampaign = () => {
     var data = {
-      //construct animal data to post
       campaignName: campaignNameState,
-      id: 1,
+      id: 10,
       startTime: moment(startTimeState, dateFormat).add(15, 'minutes'),
       endTime: moment(endTimeState, dateFormat).add(15, 'minutes'),
       applicationName: applicationNameState,
@@ -47,7 +39,7 @@ const CreateCampaign = () => {
       companyId: companyIdState,
     };
 
-    fetch('https://localhost:44359/Advertising', {
+    fetch('https://localhost:5001/Advertising', {
       //fetching data httppost
       method: 'POST',
       cache: 'no-cache',
@@ -177,7 +169,6 @@ const CreateCampaign = () => {
                       marginBottom: 20,
                       borderRadius: 5,
                     }}
-                    onChange={onChange}
                   />
                   <FormInput
                     onChange={(e) => setDurationState(e.target.value)}

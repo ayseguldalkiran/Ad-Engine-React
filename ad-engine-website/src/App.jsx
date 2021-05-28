@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Login} />
+        <Route path="/" exact component={Campaigns} />
         <Route path="/home" component={Home} />
         <Route path="/campaigns" component={Campaigns} />
         <Route path="/createCampaign" component={CreateCampaign} />

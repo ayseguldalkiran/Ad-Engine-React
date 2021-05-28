@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import HeaderComponent from '../../components/Header/Header';
 import NestedTable from '../../components/Table/Table';
 import { Layout, Breadcrumb } from 'antd';
 import './Campaigns.css';
 import FormButton from '../../components/FormButton/FormButton';
-import { Modal } from 'antd';
 const { Content } = Layout;
-import { DatePicker, Space } from 'antd';
-import { Select } from 'antd';
 
 const Campaigns = () => {
   return (

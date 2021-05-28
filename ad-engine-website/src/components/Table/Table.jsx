@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Badge, Menu, Dropdown, Space, Button } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Table, Space, Button, Alert } from 'antd';
 import './Table.css';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
-import FormButton from '../../components/FormButton/FormButton';
 import FormInput from '../../components/FormInput/FormInput';
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 import { Modal } from 'antd';
 import 'antd/dist/antd.css';
-import moment from 'moment';
-const dateFormat = 'YYYY/MM/DD';
 import { Row, Col } from 'antd';
 const NestedTable = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [advertiseDataState, setAdvertiseDataState] = useState([]);
   const [modalData, setModalData] = useState();
   const [gotModalData, setGotModalData] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
 
   const getCampaigns = async () => {
-    const response = await fetch('https://localhost:44359/Advertising');
+    const response = await fetch('https://localhost:5001/Advertising');
     const data = await response.json();
 
     return data;
@@ -38,8 +34,9 @@ const NestedTable = () => {
       redirectUrl: modalData.redirectUrl,
       duration: modalData.duration,
       companyId: modalData.companyId,
+      clickCount: modalData.clickCount,
     };
-    fetch('https://localhost:44359/Advertising', {
+    fetch('https://localhost:5001/Advertising', {
       //fetching data httppost
       method: 'PUT',
       cache: 'no-cache',
@@ -65,18 +62,23 @@ const NestedTable = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log('moalData', modalData);
-  }, [modalData]);
+  // useEffect(() => {
+  //   console.log('modalData', modalData);
+  // }, [modalData]);
 
   const getCampaign = async (recordId) => {
     const response = await fetch(
-      'https://localhost:44359/Advertising/' + recordId
+      'https://localhost:5001/Advertising/' + recordId
     );
     const data = await response.json();
     console.log('data', data);
     setModalData(data);
     setGotModalData(true);
+  };
+  console.log(modalData);
+
+  const deleteCampaign = () => {
+    setAlertVisible(true);
   };
 
   const columns = [
@@ -111,19 +113,7 @@ const NestedTable = () => {
       key: Math.floor(Math.random() * 1000) + 1,
     },
     // {
-    //   title: '',
-    //   key: 'operation',
-    //   render: () => (
-    //     <Button
-    //       style={{ borderColor: 'white', color: '#00a6b9' }}
-    //       onClick={() => {
-    //         setIsVisible(true);
-    //         getCampaign();
-    //       }}
-    //     >
-    //       Edit
-    //     </Button>
-    //   ),
+    //   render: () => <DeleteOutlined onClick={deleteCampaign} />,
     // },
   ];
   const handleOk = () => {
@@ -179,7 +169,6 @@ const NestedTable = () => {
             <p>Campaign ID:</p>
             <FormInput
               disabled={true}
-              //value={gotModalData ? modalData.id : ''}
               value={gotModalData ? modalData.id : ''}
               style={{
                 width: 'auto',
@@ -195,7 +184,6 @@ const NestedTable = () => {
           <Col xs={2} xl={12}>
             <p>Campaign Name: </p>
             <FormInput
-              //value={gotModalData ? modalData.campaignName : ''}
               value={gotModalData ? modalData.campaignName : ''}
               style={{
                 width: 'auto',
@@ -407,6 +395,24 @@ const NestedTable = () => {
             />
           </Col>
         </Row>
+        {alertVisible && (
+          <Alert
+            message="Info Text"
+            description="Info Description Info Description Info Description Info Description"
+            type="info"
+            action={
+              <Space direction="vertical">
+                <Button size="small" type="primary">
+                  Accept
+                </Button>
+                <Button size="small" danger type="ghost">
+                  Decline
+                </Button>
+              </Space>
+            }
+            closable
+          />
+        )}
       </Modal>
     </>
   );
