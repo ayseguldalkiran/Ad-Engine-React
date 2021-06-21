@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import FormButton from '../../components/FormButton/FormButton';
 import HeaderComponent from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import './Home.css';
@@ -21,7 +20,6 @@ const Home = () => {
 
   useEffect(() => {
     getWeeklyStatistics().then((data) => {
-      console.log(data);
       const weeklyData = [];
       data.forEach((element) => {
         weeklyData.push({
@@ -32,9 +30,7 @@ const Home = () => {
       setWeeklyDataArrayState(weeklyData);
     });
   }, []);
-  // useEffect(() => {
-  //   console.log(weeklyDataArrayState);
-  // }, [weeklyDataArrayState]);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
@@ -44,10 +40,15 @@ const Home = () => {
         <Content style={{ padding: '20px 50px' }}>
           <Breadcrumb>
             <Breadcrumb.Item style={{ fontSize: 28 }}>
-              <b>Home</b>
+              <b className="statisctics">Home</b>
             </Breadcrumb.Item>
           </Breadcrumb>
-          <LineChart width={600} height={300} data={weeklyDataArrayState}>
+          <LineChart
+            width={600}
+            height={300}
+            data={weeklyDataArrayState}
+            style={{ marginTop: 30 }}
+          >
             <Line type="monotone" dataKey="uv" stroke="red" />
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="name" />

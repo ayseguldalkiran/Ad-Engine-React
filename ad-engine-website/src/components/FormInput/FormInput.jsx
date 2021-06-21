@@ -2,14 +2,7 @@ import React from 'react';
 import './FormInput.css';
 import { Input } from 'antd';
 
-const FormInput = ({
-  style,
-  placeholder,
-  password,
-  value,
-  onChange,
-  disabled,
-}) => {
+const FormInput = ({ style, placeholder, value, onChange, disabled }) => {
   return (
     <div>
       <Input

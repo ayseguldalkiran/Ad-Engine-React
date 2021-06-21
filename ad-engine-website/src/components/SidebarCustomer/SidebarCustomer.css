@@ -1,0 +1,39 @@
+.SidebarList {
+    padding: 0;
+}
+
+.SidebarList .row {
+    width: 100%;
+    height: 50px;
+    color: aliceblue;
+    list-style-type: none;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 40px;
+}
+
+.SidebarList .row:hover {
+    cursor: pointer;
+    color: rgb(190, 190, 190);
+}
+
+#title {
+    font-size: 18px;
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+#icon {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.adEngineText {
+    color: white;
+    font-size: 30px;
+    margin-top: 40px;
+    text-align: center;
+    font-family: 'math';
+}

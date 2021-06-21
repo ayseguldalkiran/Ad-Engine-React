@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import HeaderComponent from '../../components/Header/Header';
 import { Layout, Breadcrumb } from 'antd';
@@ -7,16 +7,13 @@ import FormButton from '../../components/FormButton/FormButton';
 import FormInput from '../../components/FormInput/FormInput';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
-import { useState, useEffect } from 'react';
 const dateFormat = 'YYYY/MM/DD';
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 const { Content } = Layout;
 import moment from 'moment';
 
 const CreateCampaign = () => {
   const [campaignNameState, setCampaignNameState] = useState('');
-  const [campaignIdState, setCampaignIdState] = useState();
   const [startTimeState, setStartTimeState] = useState(new Date());
   const [endTimeState, setEndTimeState] = useState(new Date());
   const [typeState, setTypeState] = useState();
@@ -40,7 +37,6 @@ const CreateCampaign = () => {
     };
 
     fetch('https://localhost:5001/Advertising', {
-      //fetching data httppost
       method: 'POST',
       cache: 'no-cache',
       redirect: 'follow',
@@ -56,15 +52,12 @@ const CreateCampaign = () => {
       })
       .catch((error) => {
         alert('Error', error);
+      })
+      .then(() => {
+        window.location.pathname = '/campaigns';
       });
   };
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
 
-  useEffect(() => {
-    console.log(campaignNameState);
-  }, [campaignNameState]);
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
@@ -104,7 +97,6 @@ const CreateCampaign = () => {
                       borderRadius: 5,
                       boxShadow: '1px 1px 2px 2px rgba(154,154,154,0.1)',
                     }}
-                    // style={Styles.datePickerStyle}
                   />
                   <DatePicker
                     onChange={(e) => setEndTimeState(e)}
@@ -117,7 +109,6 @@ const CreateCampaign = () => {
                       borderRadius: 5,
                       boxShadow: '1px 1px 2px 2px rgba(154,154,154,0.1)',
                     }}
-                    // style={Styles.datePickerStyle}
                   />
 
                   <Select

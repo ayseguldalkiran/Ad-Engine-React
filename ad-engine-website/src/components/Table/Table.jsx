@@ -8,6 +8,7 @@ const { Option } = Select;
 import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
+import FormButton from '../FormButton/FormButton';
 const NestedTable = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [advertiseDataState, setAdvertiseDataState] = useState([]);
@@ -37,7 +38,6 @@ const NestedTable = () => {
       clickCount: modalData.clickCount,
     };
     fetch('https://localhost:5001/Advertising', {
-      //fetching data httppost
       method: 'PUT',
       cache: 'no-cache',
       redirect: 'follow',
@@ -53,6 +53,9 @@ const NestedTable = () => {
       })
       .catch((error) => {
         alert('Error', error);
+      })
+      .then(() => {
+        window.location.pathname = '/campaigns';
       });
   };
 
@@ -61,10 +64,6 @@ const NestedTable = () => {
       setAdvertiseDataState(data);
     });
   }, []);
-
-  // useEffect(() => {
-  //   console.log('modalData', modalData);
-  // }, [modalData]);
 
   const getCampaign = async (recordId) => {
     const response = await fetch(
@@ -75,9 +74,8 @@ const NestedTable = () => {
     setModalData(data);
     setGotModalData(true);
   };
-  console.log(modalData);
 
-  const deleteCampaign = () => {
+  const deleteCampaignAlert = () => {
     setAlertVisible(true);
   };
 
@@ -112,21 +110,26 @@ const NestedTable = () => {
       dataIndex: 'styleType',
       key: Math.floor(Math.random() * 1000) + 1,
     },
-    // {
-    //   render: () => <DeleteOutlined onClick={deleteCampaign} />,
-    // },
   ];
-  const handleOk = () => {
-    setIsVisible(false);
-  };
 
   const handleCancel = () => {
     setIsVisible(false);
   };
 
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+  const deleteCampaign = () => {
+    console.log(modalData.id, 'id');
+    fetch('https://localhost:5001/deleteCampaign/' + modalData.id, {
+      method: 'DELETE',
+      cache: 'no-cache',
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(() => {
+      window.location.pathname = '/campaigns';
+    });
+  };
 
   return (
     <>
@@ -148,8 +151,8 @@ const NestedTable = () => {
         onCancel={handleCancel}
         width={920}
         footer={[
-          <Button key="back" onClick={handleCancel}>
-            Cancel
+          <Button key="back" onClick={deleteCampaignAlert}>
+            Delete
           </Button>,
           <Button
             style={{
@@ -207,8 +210,6 @@ const NestedTable = () => {
             <p>Start Time: </p>
             <DatePicker
               placeholder={gotModalData ? modalData.startTime : ''}
-              //value={gotModalData ? moment(modalData.startTime).format('LL') : ''}
-
               style={{
                 height: 50,
                 width: 'auto',
@@ -225,14 +226,12 @@ const NestedTable = () => {
                   startTime: event,
                 }));
               }}
-              // style={Styles.datePickerStyle}
             />
           </Col>
           <Col xs={2} xl={12}>
             <p>End Time: </p>
             <DatePicker
               placeholder={gotModalData ? modalData.endTime : ''}
-              //value={gotModalData ? moment(modalData.startTime).format('LL') : ''}
               style={{
                 height: 50,
                 width: 'auto',
@@ -249,7 +248,6 @@ const NestedTable = () => {
                   endTime: event,
                 }));
               }}
-              // style={Styles.datePickerStyle}
             />
           </Col>
         </Row>
@@ -397,17 +395,26 @@ const NestedTable = () => {
         </Row>
         {alertVisible && (
           <Alert
-            message="Info Text"
-            description="Info Description Info Description Info Description Info Description"
+            message="Delete Campaign"
+            description="Are you sure you want to delete the campaign?"
             type="info"
             action={
               <Space direction="vertical">
-                <Button size="small" type="primary">
-                  Accept
-                </Button>
-                <Button size="small" danger type="ghost">
-                  Decline
-                </Button>
+                <FormButton
+                  size="small"
+                  type="primary"
+                  onClick={() => deleteCampaign()}
+                >
+                  Yes
+                </FormButton>
+                <FormButton
+                  size="small"
+                  danger
+                  type="ghost"
+                  onClick={() => setAlertVisible(false)}
+                >
+                  No
+                </FormButton>
               </Space>
             }
             closable

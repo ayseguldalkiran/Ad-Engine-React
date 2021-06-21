@@ -11,10 +11,6 @@ const Sidebar = () => {
       width={250}
       style={{
         backgroundColor: '#001329',
-        //marginTop: 20,
-        //borderRadius: 20,
-        //marginLeft: 20,
-        //marginBottom: 20,
       }}
     >
       <p className="adEngineText">AD ENGINE</p>

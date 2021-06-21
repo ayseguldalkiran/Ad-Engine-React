@@ -1,5 +1,9 @@
 import React from 'react';
-import { HomeOutlined, FundProjectionScreenOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  FundProjectionScreenOutlined,
+  HistoryOutlined,
+} from '@ant-design/icons';
 const SidebarData = [
   {
     title: 'Home',
@@ -10,6 +14,11 @@ const SidebarData = [
     title: 'Campaigns',
     icon: <FundProjectionScreenOutlined />,
     path: '/campaigns',
+  },
+  {
+    title: 'Pending Campaigns',
+    icon: <HistoryOutlined />,
+    path: '/pendingCampaigns',
   },
 ];
 export default SidebarData;
